@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>i18next Demo</title>
+    <!-- 引入 i18next 和相关插件 -->
+    <script src="https://cdn.jsdelivr.net/npm/i18next@21.6.3/dist/umd/i18next.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-i18next@1.2.1/jquery-i18next.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script src="./i18n-next-vue.js"></script>
+  </head>
+  <body>
+    <h1 id="heading" data-i18n="greeting"></h1>
+
+    <div id="app">
+      <p>{{ $t('greeting') }}</p>
+    </div>
+
+    <button onclick="changeLanguage('en')">English</button>
+    <button onclick="changeLanguage('fr')">French</button>
+    <button onclick="changeLanguage('zh')">Chinese</button>
+
+    <script>
+      // 初始化 i18next
+      i18next.init({
+        lng: "en",
+        resources: {
+          en: {
+            translation: {
+              greeting: "Hello, World!",
+            },
+          },
+          fr: {
+            translation: {
+              greeting: "Bonjour le monde!",
+            },
+          },
+          zh: {
+            translation: {
+              greeting: "你好，世界！",
+            },
+          },
+        },
+      });
+
+      // 初始化 jqueryI18next
+      jqueryI18next.init(i18next, $);
+
+      // 适配 jQuery
+      $(document).ready(function () {
+        $("body").localize();
+      });
+
+      // 适配 Vue.js
+      Vue.use(I18NextVue, { i18next });
+
+      new Vue({
+        el: "#app",
+        template: '<div>{{ $t("greeting") }}</div>',
+      });
+
+      // 切换语言
+      function changeLanguage(lang) {
+        i18next.changeLanguage(lang);
+        $("body").localize();
+      }
+    </script>
+  </body>
+</html>
