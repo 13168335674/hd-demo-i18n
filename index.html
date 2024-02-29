@@ -10,43 +10,88 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-i18next@1.2.1/jquery-i18next.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
     <script src="./i18n-next-vue.js"></script>
+    <style>
+      .main {
+        box-shadow: 6px 7px 6px 0px #ccc;
+        padding-bottom: 20px;
+      }
+      .languageSelectWrap {
+        padding: 10px;
+        position: sticky;
+        top: 0;
+        background: #f5f5f5;
+      }
+
+      .languageSelectWrap #languageSelect {
+        font-size: 1.2em;
+      }
+      .main {
+        max-width: 375px;
+        margin: 0 auto;
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
-    <h1 id="heading" data-i18n="greeting"></h1>
-
-    <div id="app">
-      <p>{{ $t('greeting') }}</p>
-    </div>
-
-    <button onclick="changeLanguage('en')">English</button>
-    <button onclick="changeLanguage('fr')">French</button>
-    <button onclick="changeLanguage('zh')">Chinese</button>
-
+    <main class="main">
+      <!-- 下拉菜单选择语言 -->
+      <div class="languageSelectWrap">
+        语言选择：
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+      <div class="jq">
+        <h1 class="title">jQuery@1.8.2</h1>
+        <p class="greeting" data-i18n="greeting"></p>
+        <p
+          class="currency"
+          data-i18n="intlCurrencyWithOptionsSimplified"
+          data-i18n-options='{ "val": 3000 }'
+        ></p>
+        <p
+          class="singularWithCount"
+          data-i18n="singularWithCount"
+          data-i18n-options='{ "count": 1 }'
+        ></p>
+        <p
+          class="singularWithCount"
+          data-i18n="singularWithCount"
+          data-i18n-options='{ "count": 2 }'
+        ></p>
+      </div>
+      <div id="app" class="vue"></div>
+    </main>
     <script>
       // 初始化 i18next
       i18next.init({
-        lng: "en",
+        lng: "zh",
         resources: {
           en: {
             translation: {
               greeting: "Hello, World!",
-            },
-          },
-          fr: {
-            translation: {
-              greeting: "Bonjour le monde!",
+              intlCurrencyWithOptionsSimplified:
+                "The Currency is {{val, currency(USD)}}",
+              singularWithCount_one: "singular with count one {{count}} item",
+              singularWithCount_other:
+                "singular with count other {{count}} items",
             },
           },
           zh: {
             translation: {
               greeting: "你好，世界！",
+              intlCurrencyWithOptionsSimplified:
+                "金额为 {{val, currency(USD)}}",
+              singularWithCount_one: "单数 {{count}} 项",
+              singularWithCount_other: "复数 {{count}} 项",
             },
           },
         },
       });
 
       // 初始化 jqueryI18next
-      jqueryI18next.init(i18next, $);
+      jqueryI18next.init(i18next, $, { useOptionsAttr: true });
 
       // 适配 jQuery
       $(document).ready(function () {
@@ -55,13 +100,30 @@
 
       // 适配 Vue.js
       Vue.use(I18NextVue, { i18next });
-
       new Vue({
         el: "#app",
-        template: '<div>{{ $t("greeting") }}</div>',
+        data: {
+          currentLanguage: "zh", // 默认语言
+        },
+        methods: {
+          changeLanguage: function (lang) {
+            i18next.changeLanguage(lang);
+            this.currentLanguage = lang;
+            $("body").localize();
+          },
+        },
+        template: `
+                <div>
+                    <h1 class="title">Vue.js@2.6.10</h1>
+                    <p class="greeting">{{ $t('greeting') }}</p>
+                    <p class="currency">{{ $t('intlCurrencyWithOptionsSimplified', { val: 3000 }) }}</p>
+                    <p class="singularWithCount">{{ $t('singularWithCount', { count: 1}) }}</p>
+                    <p class="singularWithCount">{{ $t('singularWithCount', { count: 2}) }}</p>
+                </div>
+            `,
       });
 
-      // 切换语言
+      // 切换语言函数
       function changeLanguage(lang) {
         i18next.changeLanguage(lang);
         $("body").localize();
