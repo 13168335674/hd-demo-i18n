@@ -1,0 +1,14 @@
+{
+  "head": {
+    "title": "互动测试多语言"
+  },
+  "greeting": "文案：你好，世界！",
+  "intlCurrencyWithOptionsSimplified": "金额： {{val, currency(USD)}}",
+  "singularWithCount_one": "单数： {{count}} 项",
+  "singularWithCount_other": "复数： {{count}} 项",
+  "footer": {
+    "counter_one": "计数：语言只修改过一次",
+    "counter_other": "计数：语言已更改 {{count}} 次",
+    "date": "现在是 {{date, LLLL}}"
+  }
+}

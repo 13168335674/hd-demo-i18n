@@ -1,0 +1,21 @@
+.main {
+  box-shadow: 6px 7px 6px 0px #ccc;
+  padding-bottom: 20px;
+}
+
+.languageSwitcherWrap {
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  background: #f5f5f5;
+}
+
+.languageSwitcherWrap #languageSwitcher {
+  font-size: 1.2em;
+}
+
+.main {
+  max-width: 375px;
+  margin: 0 auto;
+  text-align: center;
+}

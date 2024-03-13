@@ -1,0 +1,14 @@
+{
+  "head": {
+    "title": "HD test polyglot"
+  },
+  "greeting": "Hello, World!",
+  "intlCurrencyWithOptionsSimplified": "The Currency is {{val, currency(USD)}}",
+  "singularWithCount_one": "singular with count one {{count}} item",
+  "singularWithCount_other": "singular with count other {{count}} items",
+  "footer": {
+    "counter_one": "Die Sprache wurde erst ein mal gewechselt",
+    "counter_other": "Die Sprache wurde {{count}} mal gewechselt",
+    "date": "It's {{date, LLLL}}"
+  }
+}
